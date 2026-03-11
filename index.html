@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Questionario SONNIAMO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style_finale.css">
+</head>
+<body>
+
+<div class="container">
+
+  <form id="questionarioForm" method="POST" autocomplete="off">
+    <h1>Valutazione del Sonno</h1>
+    
+    <!-- INTRODUZIONE -->
+    <div class="intro-box">
+      <h3>👋 Benvenuto!</h3>
+      <p>Questo questionario ci aiuterà a comprendere meglio la tua situazione del sonno per offrirti il supporto più adatto alle tue esigenze.</p>
+      <p><strong>Ti chiediamo di rispondere in modo sincero e preciso.</strong> Non ci sono risposte giuste o sbagliate: ogni informazione che condividi è preziosa per aiutarti al meglio.</p>
+      <p>⏱️ <strong>Tempo stimato:</strong> 10-15 minuti</p>
+      <p>🔒 <strong>Privacy:</strong> I tuoi dati saranno trattati in modo confidenziale secondo la nostra <a href="https://drive.google.com/file/d/1A6UiWNPsWazvfZbdMwplTYVpju7IK4Ot/view?usp=sharing" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.</p>
+    </div>
+
+    <input type="hidden" name="payload" id="payload">
+    <input type="hidden" name="type" value="questionario">
+
+    <!-- DATI PERSONALI -->
+    <div class="section-title">I tuoi dati personali</div>
+    
+    <div class="form-group">
+      <label class="checkbox-item">
+        <input type="checkbox" name="consenso_privacy" required>
+        <span>Acconsento al trattamento dei miei dati personali secondo la <a href="https://drive.google.com/file/d/1A6UiWNPsWazvfZbdMwplTYVpju7IK4Ot/view?usp=sharing" target="_blank" rel="noopener noreferrer">Privacy Policy</a> <span style="color:#e53e3e;">*</span></span>
+      </label>
+    </div>
+
+    <div class="form-group"><label>Nome <span style="color:#e53e3e;">*</span></label><input type="text" name="nome" required></div>
+    <div class="form-group"><label>Cognome <span style="color:#e53e3e;">*</span></label><input type="text" name="cognome" required></div>
+    <div class="form-group"><label>Indirizzo email <span style="color:#e53e3e;">*</span></label><input type="email" name="email" required></div>
+    <div class="form-group"><label>Numero di telefono <span style="color:#e53e3e;">*</span></label><input type="tel" name="telefono" required></div>
+
+    <div class="form-group">
+      <label>In quale fascia d'età ti trovi?</label>
+      <div class="radio-group">
+        <label class="radio-item"><input type="radio" name="fascia_eta" value="18-25" required> 18-25 anni</label>
+        <label class="radio-item"><input type="radio" name="fascia_eta" value="26-35"> 26-35 anni</label>
+        <label class="radio-item"><input type="radio" name="fascia_eta" value="36-45"> 36-45 anni</label>
+        <label class="radio-item"><input type="radio" name="fascia_eta" value="46-55"> 46-55 anni</label>
+        <label class="radio-item"><input type="radio" name="fascia_eta" value="56+"> Più di 56 anni</label>
+      </div>
+    </div>
+
+    <div class="form-group"><label>Qual è la tua occupazione o settore lavorativo?</label><input type="text" name="occupazione" placeholder="Es: Insegnante, Ingegnere, Commerciante..." required></div>
+
+    <div class="form-group">
+      <label>Come descriveresti il tuo stile di vita?</label>
+      <div class="radio-group">
+        <label class="radio-item"><input type="radio" name="stile_vita" value="Sedentario" required> Sedentario (poco movimento fisico)</label>
+        <label class="radio-item"><input type="radio" name="stile_vita" value="Attivo"> Attivo (attività fisica regolare)</label>
+        <label class="radio-item"><input type="radio" name="stile_vita" value="Stressato"> Stressato (alta pressione lavorativa/personale)</label>
+        <label class="radio-item"><input type="radio" name="stile_vita" value="Multitasking"> Multitasking (sempre impegnato in più attività)</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Qual è la tua situazione familiare attuale?</label>
+      <div class="radio-group">
+        <label class="radio-item"><input type="radio" name="situazione_familiare" value="Single" required> Vivo da solo/a</label>
+        <label class="radio-item"><input type="radio" name="situazione_familiare" value="Coppia"> Vivo in coppia</label>
+        <label class="radio-item"><input type="radio" name="situazione_familiare" value="Con figli"> Vivo con figli</label>
+        <label class="radio-item"><input type="radio" name="situazione_familiare" value="Caregiving"> Mi prendo cura di familiari (caregiving)</label>
+      </div>
+    </div>
+
+    <!-- BLOCCO 1 -->
+    <div class="section-title">Sezione 1 - Sintomi durante il sonno</div>
+    <p class="sub-label">Seleziona tutte le affermazioni che corrispondono alla tua esperienza. Se qualcuno ti ha fatto notare alcuni di questi comportamenti, selezionali anche se non te ne accorgi personalmente.</p>
+    
+    <div class="checkbox-group">
+      <label class="checkbox-item"><input type="checkbox" name="disturbo_russa" value="vero"> Mi è stato riferito che russo durante il sonno</label>
+      <label class="checkbox-item"><input type="checkbox" name="disturbo_apnea" value="vero"> Mi è stato riferito che il mio respiro si interrompe durante la notte</label>
+      <label class="checkbox-item"><input type="checkbox" name="disturbo_pressione" value="vero"> Soffro di pressione alta (ipertensione)</label>
+      <label class="checkbox-item"><input type="checkbox" name="disturbo_scontroso" value="vero"> Mi sento spesso irritabile o di cattivo umore</label>
+      <label class="checkbox-item"><input type="checkbox" name="disturbo_guida" value="vero"> Mi è capitato di addormentarmi o essere molto assonnato mentre guidavo</label>
+      <label class="checkbox-item"><input type="checkbox" name="disturbo_cuore" value="vero"> Durante la notte sento il cuore battere forte o in modo irregolare</label>
+      <label class="checkbox-item"><input type="checkbox" name="disturbo_maltesta" value="vero"> Mi sveglio spesso con mal di testa al mattino</label>
+      <label class="checkbox-item"><input type="checkbox" name="disturbo_fiato" value="vero"> Mi capita di svegliarmi con sensazione di mancanza d'aria</label>
+      <label class="checkbox-item"><input type="checkbox" name="disturbo_peso" value="vero"> Sono in sovrappeso rispetto alla mia altezza</label>
+      <label class="checkbox-item"><input type="checkbox" name="disturbo_sex" value="vero"> Ho notato un calo del desiderio sessuale</label>
+      <label class="checkbox-item"><input type="checkbox" name="disturbo_sonnolenza" value="vero"> Faccio fatica a rimanere sveglio/a durante il giorno</label>
+      <label class="checkbox-item"><input type="checkbox" name="disturbo_bocca" value="vero"> Al risveglio ho spesso la bocca molto secca</label>
+    </div>
+
+    <br>
+    <div class="form-group">
+      <label>Quanto sei consapevole di avere possibili sintomi di apnea del sonno?</label>
+      <p class="sub-label" style="margin-top:5px;">1 = Non ne sono per niente consapevole | 5 = Ne sono completamente consapevole</p>
+      <div class="scale-row">
+        <span>1</span>
+        <input type="radio" name="apnea_consapevolezza" value="1">
+        <input type="radio" name="apnea_consapevolezza" value="2">
+        <input type="radio" name="apnea_consapevolezza" value="3">
+        <input type="radio" name="apnea_consapevolezza" value="4">
+        <input type="radio" name="apnea_consapevolezza" value="5">
+        <span>5</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Hai mai effettuato un test o uno screening per l'apnea del sonno?</label>
+      <select name="apnea_screening">
+        <option value="No">No, mai</option>
+        <option value="Si">Sì, l'ho fatto</option>
+      </select>
+    </div>
+
+    <!-- ALTRE ESPERIENZE -->
+    <p class="sub-label" style="margin-top:40px; font-weight:600; font-size:16px;">Altre esperienze legate al sonno</p>
+    <p class="sub-label">Seleziona se hai vissuto uno o più di questi episodi:</p>
+    
+    <div class="checkbox-group">
+      <label class="checkbox-item"><input type="checkbox" name="disturbo_muscoli" value="vero"> I miei muscoli si afflosciano improvvisamente quando sono sorpreso/a o arrabbiato/a</label>
+      <label class="checkbox-item"><input type="checkbox" name="disturbo_stordito" value="vero"> Mi sento spesso stordito/a o confuso/a</label>
+      <label class="checkbox-item"><input type="checkbox" name="disturbo_sogni_vividi" value="vero"> Faccio sogni molto vividi e intensi, quasi realistici</label>
+      <label class="checkbox-item"><input type="checkbox" name="disturbo_sociale" value="vero"> Mi è capitato di addormentarmi in situazioni sociali (es: cena, riunione)</label>
+      <label class="checkbox-item"><input type="checkbox" name="disturbo_lavoro" value="vero"> La sonnolenza mi ha causato problemi sul lavoro</label>
+      <label class="checkbox-item"><input type="checkbox" name="disturbo_sogni_subito" value="vero"> Comincio a sognare appena mi addormento</label>
+      <label class="checkbox-item"><input type="checkbox" name="disturbo_attacchi" value="vero"> Ho improvvisi e incontrollabili attacchi di sonno durante il giorno</label>
+      <label class="checkbox-item"><input type="checkbox" name="disturbo_paralisi" value="vero"> Ho sperimentato episodi di paralisi del sonno (impossibilità di muoversi al risveglio)</label>
+    </div>
+
+    <!-- GAMBE E MOVIMENTO -->
+    <p class="sub-label" style="margin-top:40px; font-weight:600; font-size:16px;">Movimenti delle gambe e del corpo</p>
+    <p class="sub-label">Indica se riconosci uno di questi sintomi:</p>
+    
+    <div class="checkbox-group">
+      <label class="checkbox-item"><input type="checkbox" name="gambe_tensione" value="vero"> Sento tensione o fastidio alle gambe quando sono a riposo</label>
+      <label class="checkbox-item"><input type="checkbox" name="gambe_sobbalzi" value="vero"> Il mio corpo ha sobbalzi o scatti durante il sonno</label>
+      <label class="checkbox-item"><input type="checkbox" name="gambe_scalcio" value="vero"> Scalcio o muovo le gambe di notte (mi è stato riferito)</label>
+      <label class="checkbox-item"><input type="checkbox" name="gambe_dolore" value="vero"> Prima di addormentarmi sento dolore o sensazione di "gattonamento" alle gambe</label>
+      <label class="checkbox-item"><input type="checkbox" name="gambe_crampi" value="vero"> Soffro di crampi notturni alle gambe</label>
+      <label class="checkbox-item"><input type="checkbox" name="gambe_irrequiete" value="vero"> Ho le gambe irrequiete e sento il bisogno di muoverle continuamente</label>
+      <label class="checkbox-item"><input type="checkbox" name="gambe_sonnolenza" value="vero"> Sono assonnato/a di giorno anche se ho dormito abbastanza ore</label>
+    </div>
+
+    <br>
+    <div class="form-group">
+      <label>Quanto la sonnolenza diurna impatta sulla tua produttività?</label>
+      <p class="sub-label" style="margin-top:5px;">1 = Nessun impatto | 5 = Impatto molto severo</p>
+      <div class="scale-row">
+        <span>1</span>
+        <input type="radio" name="produttivita_impatto" value="1">
+        <input type="radio" name="produttivita_impatto" value="2">
+        <input type="radio" name="produttivita_impatto" value="3">
+        <input type="radio" name="produttivita_impatto" value="4">
+        <input type="radio" name="produttivita_impatto" value="5">
+        <span>5</span>
+      </div>
+      <textarea name="produttivita_descrizione" placeholder="Se vuoi, descrivi brevemente in che modo la sonnolenza influisce sul tuo lavoro o attività quotidiane..." style="margin-top:15px;"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Lavori su turni irregolari (es: notte, mattina presto, turnazioni)?</label>
+      <select name="lavoro_turni" id="lavoro_turni">
+        <option value="No">No</option>
+        <option value="Si">Sì</option>
+      </select>
+      <input type="text" name="lavoro_turni_spec" id="lavoro_turni_spec" placeholder="Specifica quali turni (es: turni notturni 22-06)" class="hidden" style="margin-top:10px;">
+    </div>
+
+    <div class="form-group">
+      <label>In quale momento della giornata ti senti più affaticato/a?</label>
+      <select name="momento_fatica">
+        <option value="Mattina">Mattina</option>
+        <option value="Pomeriggio">Pomeriggio</option>
+        <option value="Sera">Sera</option>
+        <option value="Varia">Varia durante la giornata</option>
+      </select>
+    </div>
+
+    <!-- BLOCCO 2 -->
+    <div class="section-title">Sezione 2 - Insonnia, pensieri ed emozioni</div>
+    
+    <div class="checkbox-group">
+      <label class="checkbox-item"><input type="checkbox" name="insonnia_priorita" value="vero"> Dormire bene è una priorità importante per me</label>
+      <label class="checkbox-item"><input type="checkbox" name="insonnia_difficolta_inizio" id="chk_inizio" value="vero"> Faccio fatica ad addormentarmi quando vado a letto</label>
+    </div>
+
+    <!-- Condizionale Inizio -->
+    <div id="cond_inizio" class="hidden" style="border-left:4px solid #ff6b35; padding-left:20px; margin:20px 0; background:#fff5f0; padding:20px; border-radius:8px;">
+      <div class="form-group">
+        <label>Quando sei a letto e non riesci ad addormentarti, cosa ti passa per la mente?</label>
+        <textarea name="pensieri_inizio" placeholder="Es: Penso al lavoro di domani, ripenso a cosa è successo oggi, mi preoccupo di non riuscire a dormire..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Che emozioni provi in questi momenti?</label>
+        <textarea name="emozioni_inizio" placeholder="Es: Frustrazione, ansia, rabbia, tristezza, preoccupazione..."></textarea>
+      </div>
+    </div>
+
+    <div class="checkbox-group" style="margin-top:25px;">
+      <label class="checkbox-item"><input type="checkbox" name="insonnia_pensieri_neg" value="vero"> Ho pensieri negativi o paura legati al sonno</label>
+      <label class="checkbox-item"><input type="checkbox" name="insonnia_conseguenze" value="vero"> Mi preoccupo per le conseguenze del giorno dopo se non dormo bene</label>
+      <label class="checkbox-item"><input type="checkbox" name="insonnia_attesa" value="vero"> Passo molto tempo a letto in attesa che arrivi il sonno</label>
+      <label class="checkbox-item"><input type="checkbox" name="insonnia_risvegli" id="chk_risvegli" value="vero"> Mi sveglio durante la notte e faccio fatica a riaddormentarmi</label>
+    </div>
+
+    <!-- Condizionale Risvegli -->
+    <div id="cond_risvegli" class="hidden" style="border-left:4px solid #ff6b35; padding-left:20px; margin:20px 0; background:#fff5f0; padding:20px; border-radius:8px;">
+      <div class="form-group">
+        <label>Quando ti svegli di notte, cosa pensi?</label>
+        <textarea name="pensieri_risveglio" placeholder="Es: Guardo l'ora e mi arrabbio, penso che non riuscirò più a dormire, ripenso ai problemi..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Che emozioni provi quando ti svegli di notte?</label>
+        <textarea name="emozioni_risveglio" placeholder="Es: Ansia, frustrazione, paura, agitazione, rassegnazione..."></textarea>
+      </div>
+    </div>
+
+    <div class="checkbox-group" style="margin-top:25px;">
+      <label class="checkbox-item"><input type="checkbox" name="insonnia_sveglia_presto" value="vero"> Mi sveglio prima della sveglia e non riesco a riaddormentarmi</label>
+      <label class="checkbox-item"><input type="checkbox" name="insonnia_superficiale" value="vero"> Il mio sonno è molto leggero e superficiale</label>
+      <label class="checkbox-item"><input type="checkbox" name="insonnia_mente_corre" value="vero"> La mia mente "corre" e non riesco a fermare i pensieri</label>
+      <label class="checkbox-item"><input type="checkbox" name="insonnia_prevedo" value="vero"> Già prima di andare a dormire prevedo che avrò problemi a dormire</label>
+      <label class="checkbox-item"><input type="checkbox" name="insonnia_no_relax" value="vero"> Faccio fatica a rilassarmi fisicamente e mentalmente</label>
+      <label class="checkbox-item"><input type="checkbox" name="insonnia_30min" value="vero"> Rimango sveglio/a per più di 30 minuti prima di addormentarmi</label>
+    </div>
+
+    <br>
+    <div class="form-group">
+      <label>Quante notti a settimana hai problemi di sonno?</label>
+      <select name="frequenza_problema">
+        <option>1-2 notti</option>
+        <option>3-4 notti</option>
+        <option>5-7 notti (quasi ogni notte)</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label>Da quanto tempo hai questi problemi di sonno?</label>
+      <select name="durata_problema">
+        <option>Meno di 3 mesi</option>
+        <option>Da 3 a 6 mesi</option>
+        <option>Da 6 mesi a 1 anno</option>
+        <option>Più di 1 anno</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label>Qual è la tua priorità principale riguardo al sonno?</label>
+      <select name="priorita_obiettivo">
+        <option>Dormire meglio e più profondamente</option>
+        <option>Avere più energia durante il giorno</option>
+        <option>Ridurre stress e ansia</option>
+        <option>Migliorare la salute generale</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Quanto tempo hai dedicato alla ricerca di soluzioni per il tuo problema di sonno?</label>
+      <p class="sub-label" style="margin-top:5px;">1 = Molto poco | 5 = Molto tempo</p>
+      <input type="number" name="tempo_soluzioni" min="1" max="5" placeholder="Da 1 a 5">
+    </div>
+    
+    <div class="form-group">
+      <label>Qual è il principale ostacolo che ti impedisce di risolvere i tuoi problemi di sonno?</label>
+      <select name="ostacolo_principale">
+        <option>Mancanza di informazioni chiare</option>
+        <option>Costo delle soluzioni</option>
+        <option>Scetticismo sull'efficacia</option>
+        <option>Mancanza di tempo</option>
+        <option>Altro</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Quanto è evidente il tuo problema di sonno per le persone intorno a te (famiglia, colleghi)?</label>
+      <p class="sub-label" style="margin-top:5px;">0 = Per niente evidente | 4 = Molto evidente</p>
+      <div class="scale-row">
+        <span>0</span>
+        <input type="radio" name="impatto_sociale" value="0">
+        <input type="radio" name="impatto_sociale" value="1">
+        <input type="radio" name="impatto_sociale" value="2">
+        <input type="radio" name="impatto_sociale" value="3">
+        <input type="radio" name="impatto_sociale" value="4">
+        <span>4</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Quanto sei preoccupato/a per i tuoi problemi di sonno?</label>
+      <p class="sub-label" style="margin-top:5px;">0 = Per niente preoccupato/a | 4 = Molto preoccupato/a</p>
+      <div class="scale-row">
+        <span>0</span>
+        <input type="radio" name="livello_preoccupazione" value="0">
+        <input type="radio" name="livello_preoccupazione" value="1">
+        <input type="radio" name="livello_preoccupazione" value="2">
+        <input type="radio" name="livello_preoccupazione" value="3">
+        <input type="radio" name="livello_preoccupazione" value="4">
+        <span>4</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Quanto i tuoi problemi di sonno interferiscono con le tue attività quotidiane?</label>
+      <p class="sub-label" style="margin-top:5px;">0 = Nessuna interferenza | 4 = Interferiscono molto</p>
+      <div class="scale-row">
+        <span>0</span>
+        <input type="radio" name="interferenza_quotidiana" value="0">
+        <input type="radio" name="interferenza_quotidiana" value="1">
+        <input type="radio" name="interferenza_quotidiana" value="2">
+        <input type="radio" name="interferenza_quotidiana" value="3">
+        <input type="radio" name="interferenza_quotidiana" value="4">
+        <span>4</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Quale approccio preferiresti per migliorare il tuo sonno?</label>
+      <select name="approccio_preferito">
+        <option>Metodi naturali (routine, alimentazione, tecniche di rilassamento)</option>
+        <option>Tecnologia/App per il monitoraggio e miglioramento</option>
+        <option>Coaching o supporto personalizzato</option>
+        <option>Farmaci o integratori</option>
+        <option>Combinazione di più approcci</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label>Cosa fai abitualmente prima di andare a dormire?</label>
+      <textarea name="attivita_presonno" placeholder="Es: Guardo la TV, uso lo smartphone, leggo un libro, faccio una doccia, medito..."></textarea>
+    </div>
+    
+    <div class="form-group">
+      <label>Quale aspetto della tua vita è più colpito dai problemi di sonno?</label>
+      <select name="aspetto_vita_colpito">
+        <option>Lavoro e produttività</option>
+        <option>Vita familiare</option>
+        <option>Relazioni sociali</option>
+        <option>Attività sportiva</option>
+        <option>Creatività e concentrazione</option>
+        <option>Salute mentale ed emotiva</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label>Quanto sarebbe importante per te avere un sonno di qualità superiore?</label>
+      <p class="sub-label" style="margin-top:5px;">Descrivi in 2-3 frasi cosa significherebbe per te dormire veramente bene:</p>
+      <textarea name="valore_sonno_qualita" placeholder="Es: Potrei essere più presente con la mia famiglia, avrei più energia per i miei progetti, mi sentirei meno stressato..."></textarea>
+    </div>
+    
+    <div class="form-group">
+      <label>Se potessi migliorare una sola cosa del tuo sonno, cosa sceglieresti?</label>
+      <select name="miglioramento_desiderato">
+        <option>Addormentarmi più velocemente</option>
+        <option>Dormire tutta la notte senza svegliarmi</option>
+        <option>Svegliarmi riposato/a e con energia</option>
+        <option>Ridurre l'ansia legata al sonno</option>
+        <option>Altro</option>
+      </select>
+    </div>
+
+    <!-- BLOCCO 3 -->
+    <div class="section-title">Sezione 3 - Abitudini e igiene del sonno</div>
+    
+    <div class="form-group">
+      <label>Quanti caffè (o bevande con caffeina) bevi al giorno?</label>
+      <select name="caffe_qty">
+        <option>0 (nessuno)</option>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+        <option>Più di 5</option>
+      </select>
+    </div>
+    
+    <div class="checkbox-group">
+      <label class="checkbox-item"><input type="checkbox" name="igiene_stimolanti" value="vero"> Uso stimolanti (caffeina, energy drink) o alcol nelle ore prima di dormire</label>
+      <label class="checkbox-item"><input type="checkbox" name="igiene_pomeriggio" value="vero"> Faccio spesso un pisolino nel primo pomeriggio</label>
+      <label class="checkbox-item"><input type="checkbox" name="igiene_sport" value="vero"> Pratico sport o attività fisica in modo regolare</label>
+      <label class="checkbox-item"><input type="checkbox" name="igiene_sport_sera" value="vero"> Mi alleno/faccio sport prima delle 19:00</label>
+      <label class="checkbox-item"><input type="checkbox" name="igiene_luci" value="vero"> Ci sono luci esterne (es: lampioni, insegne) che entrano nella mia camera</label>
+      <label class="checkbox-item"><input type="checkbox" name="igiene_rumori" value="vero"> Ci sono rumori disturbanti nella mia camera da letto</label>
+      <label class="checkbox-item"><input type="checkbox" name="igiene_partner" value="vero"> Il mio partner russa o disturba il mio sonno</label>
+      <label class="checkbox-item"><input type="checkbox" name="igiene_caldo" value="vero"> Soffro il caldo e sudo durante la notte</label>
+      <label class="checkbox-item"><input type="checkbox" name="igiene_animali" value="vero"> Dormo con animali domestici nel letto</label>
+      <label class="checkbox-item"><input type="checkbox" name="igiene_cibo_notte" value="vero"> Mi capita di mangiare o fumare durante la notte</label>
+      <label class="checkbox-item"><input type="checkbox" name="igiene_orologio" value="vero"> Guardo spesso l'orologio durante la notte</label>
+    </div>
+
+    <!-- BLOCCO 4 -->
+    <div class="section-title">Sezione 4 - Comfort e ambiente di riposo</div>
+    
+    <div class="form-group">
+      <label>Quanto è importante per te l'ambiente in cui dormi (materasso, cuscino, temperatura)?</label>
+      <p class="sub-label" style="margin-top:5px;">1 = Poco importante | 5 = Molto importante</p>
+      <input type="number" name="importanza_ambiente" min="1" max="5" placeholder="Da 1 a 5">
+    </div>
+    
+    <div class="checkbox-group">
+      <label class="checkbox-item"><input type="checkbox" name="riposo_dolore_colonna" value="vero"> Al mattino sento dolore alla colonna vertebrale/schiena</label>
+      <label class="checkbox-item"><input type="checkbox" name="riposo_dolore_cervicale" value="vero"> Al mattino ho dolore al collo/cervicale</label>
+      <label class="checkbox-item"><input type="checkbox" name="riposo_piu_stanco" value="vero"> Mi sveglio più stanco/a di quando sono andato/a a letto</label>
+      <label class="checkbox-item"><input type="checkbox" name="riposo_posizione" value="vero"> Non riesco a mantenere la stessa posizione durante la notte</label>
+      <label class="checkbox-item"><input type="checkbox" name="riposo_girarsi" value="vero"> Mi giro e rigiro continuamente nel letto</label>
+      <label class="checkbox-item"><input type="checkbox" name="riposo_arti" value="vero"> Mi sveglio con braccia o gambe addormentate/intorpidite</label>
+      <label class="checkbox-item"><input type="checkbox" name="riposo_spalla" value="vero"> Ho dolore alla spalla quando dormo su un lato</label>
+    </div>
+    
+    <div class="form-group">
+      <label>Da quanti anni usi il tuo materasso attuale?</label>
+      <input type="text" name="eta_materasso" placeholder="Es: 5 anni, 10 anni, non lo ricordo...">
+    </div>
+    
+    <div class="form-group">
+      <label>Quanto pensi che la posizione in cui dormi causi dolore al tuo corpo?</label>
+      <p class="sub-label" style="margin-top:5px;">1 = Non causa dolore | 5 = Causa molto dolore</p>
+      <input type="number" name="posizione_causa_dolore" min="1" max="5" placeholder="Da 1 a 5">
+    </div>
+    
+    <div class="form-group">
+      <label>Quale dolore vorresti eliminare maggiormente?</label>
+      <select name="dolore_target">
+        <option>Dolore al collo/cervicale</option>
+        <option>Dolore alla spalla</option>
+        <option>Dolore alla schiena/colonna</option>
+        <option>Dolore alle gambe</option>
+        <option>Altro tipo di dolore</option>
+      </select>
+    </div>
+
+    <!-- BLOCCO 5 -->
+    <div class="section-title">Sezione 5 - Ritmi biologici e motivazione</div>
+    
+    <div class="form-group">
+      <label>Secondo te, qual è la causa principale dei tuoi problemi di sonno?</label>
+      <select name="causa_principale">
+        <option>Stress quotidiano</option>
+        <option>Ansia e preoccupazioni</option>
+        <option>Cattive abitudini</option>
+        <option>Problemi di salute/medici</option>
+        <option>Ambiente di sonno inadeguato</option>
+        <option>Non lo so</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label>Quanto sei ottimista sulla possibilità di migliorare il tuo sonno?</label>
+      <p class="sub-label" style="margin-top:5px;">1 = Per niente ottimista | 5 = Molto ottimista</p>
+      <input type="number" name="ottimismo_miglioramento" min="1" max="5" placeholder="Da 1 a 5">
+    </div>
+    
+    <div class="form-group">
+      <label>Quanto sei disponibile a fare cambiamenti nel tuo stile di vita per dormire meglio?</label>
+      <p class="sub-label" style="margin-top:5px;">1 = Poco disponibile | 5 = Molto disponibile</p>
+      <input type="number" name="disponibilita_cambiamenti" min="1" max="5" placeholder="Da 1 a 5">
+    </div>
+    
+    <div class="form-group">
+      <label>Quanto conosci la relazione tra sonno e salute generale?</label>
+      <p class="sub-label" style="margin-top:5px;">1 = Conosco poco | 5 = Conosco molto bene</p>
+      <input type="number" name="conoscenza_salute" min="1" max="5" placeholder="Da 1 a 5">
+    </div>
+    
+    <div class="form-group">
+      <label>Quante ore di esercizio fisico fai in media alla settimana?</label>
+      <input type="number" name="ore_sport_week" placeholder="Es: 3 ore">
+    </div>
+    
+    <div class="checkbox-group">
+      <label class="checkbox-item"><input type="checkbox" name="circadiani_conoscenza" value="Alta"> So cosa sono i ritmi circadiani e come influenzano il sonno</label>
+      <label class="checkbox-item"><input type="checkbox" name="circadiani_cronotipo" value="Conosco"> Conosco il mio cronotipo (se sono più "gufo" o "allodola")</label>
+      <label class="checkbox-item"><input type="checkbox" name="circadiani_routine" value="Allineata"> Ho una routine quotidiana abbastanza regolare</label>
+      <label class="checkbox-item"><input type="checkbox" name="circadiani_leve" value="Uso"> Uso strategie specifiche per regolare il mio ritmo sonno-veglia</label>
+    </div>
+
+    <!-- BLOCCO 6 -->
+    <div class="section-title">Sezione 6 - Energia, umore e qualità di vita</div>
+    
+    <p class="sub-label">Valuta il tuo livello di energia nei diversi momenti della giornata (da 1 = molto basso a 10 = molto alto):</p>
+    <label style="font-weight:600; margin-top:15px; display:block;">Livello di energia</label>
+    <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px; margin-bottom:20px; margin-top:10px;">
+      <input type="number" name="energia_mattino" placeholder="Mattina" min="1" max="10">
+      <input type="number" name="energia_giorno" placeholder="Pomeriggio" min="1" max="10">
+      <input type="number" name="energia_sera" placeholder="Sera" min="1" max="10">
+    </div>
+
+    <p class="sub-label">Valuta il tuo umore nei diversi momenti della giornata (da 1 = molto negativo a 10 = molto positivo):</p>
+    <label style="font-weight:600; margin-top:15px; display:block;">Umore</label>
+    <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px; margin-bottom:20px; margin-top:10px;">
+      <input type="number" name="umore_mattino" placeholder="Mattina" min="1" max="10">
+      <input type="number" name="umore_giorno" placeholder="Pomeriggio" min="1" max="10">
+      <input type="number" name="umore_sera" placeholder="Sera" min="1" max="10">
+    </div>
+
+    <div class="form-group">
+      <label>Quando ti svegli al mattino, quanto ti senti riposato/a?</label>
+      <p class="sub-label" style="margin-top:5px;">1 = Per niente riposato/a | 10 = Completamente riposato/a</p>
+      <input type="number" name="riposo_risveglio" min="1" max="10" placeholder="Da 1 a 10">
+    </div>
+    
+    <p class="sub-label">Come valuti le tue prestazioni (concentrazione, efficienza) durante la giornata? (da 1 = molto basse a 10 = eccellenti):</p>
+    <label style="font-weight:600; margin-top:15px; display:block;">Prestazioni percepite</label>
+    <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px; margin-bottom:20px; margin-top:10px;">
+      <input type="number" name="prestazioni_mattino" placeholder="Mattina" min="1" max="10">
+      <input type="number" name="prestazioni_giorno" placeholder="Pomeriggio" min="1" max="10">
+      <input type="number" name="prestazioni_sera" placeholder="Sera" min="1" max="10">
+    </div>
+
+    <div class="form-group">
+      <label>Qual è il tuo livello di motivazione generale durante la giornata?</label>
+      <p class="sub-label" style="margin-top:5px;">1 = Nessuna motivazione | 10 = Motivazione altissima</p>
+      <input type="number" name="motivazione_giorno" min="1" max="10" placeholder="Da 1 a 10">
+    </div>
+    
+    <div class="form-group">
+      <label style="font-size:18px; color:#ff6b35; font-weight:700;">⭐ VOTO COMPLESSIVO: Come valuteresti la qualità del tuo sonno attuale?</label>
+      <p class="sub-label" style="margin-top:5px; margin-bottom:15px;">0 = Pessimo | 10 = Eccellente</p>
+      <input type="number" name="voto_sonno_overall" min="0" max="10" required style="font-size:1.8em; text-align:center; font-weight:700; border:3px solid #ff6b35;">
+    </div>
+    
+    <div class="form-group">
+      <label>Qual è il tuo obiettivo principale per i prossimi 3 mesi riguardo al sonno?</label>
+      <textarea name="obiettivo_3mesi" placeholder="Descrivi cosa vorresti ottenere nei prossimi 3 mesi..." style="min-height:100px;"></textarea>
+    </div>
+
+    <button type="submit" id="submitBtn" class="btn-submit">INVIA QUESTIONARIO</button>
+  </form>
+
+  <div id="successView" class="success-view hidden">
+    <div class="success-icon">✅</div>
+    <h2>Grazie mille!</h2>
+    <p>Le tue risposte sono state registrate con successo. Ti contatteremo presto per offrirti il supporto più adatto a te.</p>
+    <button onclick="window.location.reload()" class="btn-submit" style="width:auto; padding:12px 35px;">Compila un altro questionario</button>
+  </div>
+</div>
+
+<iframe name="hidden_iframe" id="hidden_iframe" class="hidden"></iframe>
+<script src="script.js"></script>
+
+</body>
+</html>
