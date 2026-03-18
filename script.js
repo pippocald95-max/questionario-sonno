@@ -1,5 +1,5 @@
 // CONFIGURAZIONE
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxP14ZjgM2zBLe1qOYYSxRKBNwWsvoi8WIJKsbDXJ21LipmGsCJp3PEFRinT8Duc3GLSQ/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzxumg01sSaHwOMutYdT-7W2J-04HdkydIwzXOP2rGsDZo2MhtgmfW2OfbGlTMqFMq9ag/exec';
 
 // GESTIONE CONDIZIONALI
 const chkInizio = document.getElementById('chk_inizio');
@@ -53,10 +53,14 @@ document.getElementById('questionarioForm').addEventListener('submit', function 
   });
 
   // Invio con fetch POST (no-cors necessario per Google Apps Script)
+  // IMPORTANTE: usare 'text/plain' come Content-Type per evitare
+  // il CORS preflight OPTIONS che Google Apps Script non supporta.
+  // Con 'application/json' il browser invia prima una richiesta OPTIONS
+  // che GAS non gestisce, causando il 405 Not Allowed.
   fetch(GOOGLE_SCRIPT_URL, {
     method: 'POST',
     mode: 'no-cors',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'text/plain' }, // ← chiave: evita il preflight
     body: JSON.stringify(data)
   })
     .then(() => {
