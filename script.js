@@ -1,10 +1,7 @@
 // CONFIGURAZIONE
-// ✅ L'URL del backend intermedio (nessun segreto esposto nel browser)
-// Sostituisci con il tuo endpoint reale una volta creato il backend
-const BACKEND_URL = 'https://api.cosimosgobba.it/questionario';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwt6GmnrVZlMZ9fMH-kVUMmdzWxT9rHzZMqrGi3iqIRp71Ua0pGZjMkU2TDwlBX5utyjQ/exec';
 
-// ─── GESTIONE CONDIZIONALI ────────────────────────────────────────────────────
-
+// GESTIONE CONDIZIONALI
 const chkInizio = document.getElementById('chk_inizio');
 const condInizio = document.getElementById('cond_inizio');
 if (chkInizio) {
@@ -29,9 +26,8 @@ if (selTurni) {
   });
 }
 
-// ─── INVIO FORM ───────────────────────────────────────────────────────────────
-
-document.getElementById('questionarioForm').addEventListener('submit', async function (e) {
+// INVIO FORM
+document.getElementById('questionarioForm').addEventListener('submit', function (e) {
   e.preventDefault();
 
   const btn = document.getElementById('submitBtn');
@@ -56,29 +52,25 @@ document.getElementById('questionarioForm').addEventListener('submit', async fun
     if (Array.isArray(data[k])) data[k] = data[k].join(', ');
   });
 
-  // ✅ Invio al backend intermedio con application/json
-  // Il backend (Vercel/Cloudflare) si occuperà di chiamare Apps Script
-  // in modo sicuro lato server, senza esporre l'URL al browser.
-  try {
-    const response = await fetch(BACKEND_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
+  // Invio con fetch POST (no-cors necessario per Google Apps Script)
+  // IMPORTANTE: usare 'text/plain' come Content-Type per evitare
+  // il CORS preflight OPTIONS che Google Apps Script non supporta.
+  // Con 'application/json' il browser invia prima una richiesta OPTIONS
+  // che GAS non gestisce, causando il 405 Not Allowed.
+  fetch(GOOGLE_SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'text/plain' }, // ← chiave: evita il preflight
+    body: JSON.stringify(data)
+  })
+    .then(() => {
+      document.getElementById('questionarioForm').style.display = 'none';
+      document.getElementById('successView').classList.remove('hidden');
+      window.scrollTo(0, 0);
+    })
+    .catch(() => {
+      btn.disabled = false;
+      btn.innerText = 'INVIA QUESTIONARIO';
+      alert("Errore durante l'invio. Controlla la connessione e riprova.");
     });
-
-    if (!response.ok) {
-      throw new Error('Errore dal server: ' + response.status);
-    }
-
-    // ✅ Il successo viene mostrato SOLO se il backend conferma la ricezione
-    document.getElementById('questionarioForm').style.display = 'none';
-    document.getElementById('successView').classList.remove('hidden');
-    window.scrollTo(0, 0);
-
-  } catch (err) {
-    console.error('Errore invio:', err);
-    btn.disabled = false;
-    btn.innerText = 'INVIA QUESTIONARIO';
-    alert("Errore durante l'invio. Controlla la connessione e riprova.");
-  }
 });
