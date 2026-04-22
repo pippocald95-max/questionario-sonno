@@ -1,5 +1,5 @@
 // CONFIGURAZIONE
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwt6GmnrVZlMZ9fMH-kVUMmdzWxT9rHzZMqrGi3iqIRp71Ua0pGZjMkU2TDwlBX5utyjQ/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwHLPw9-Qx1APysjedbPM6Dv-KdSR_a0c4droZ-8p5ZF_jLRM4F6_5pGDRp90Qsh0SajQ/exec';
 
 // GESTIONE CONDIZIONALI
 const chkInizio = document.getElementById('chk_inizio');
