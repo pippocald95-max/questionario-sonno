@@ -49,7 +49,6 @@ if (selTurni && inpTurni) {
 // ==========================================
 const form = document.getElementById('questionarioForm');
 const submitBtn = document.getElementById('submitBtn');
-const payloadField = document.getElementById('payload');
 const successView = document.getElementById('successView');
 
 if (form) {
@@ -83,77 +82,36 @@ if (form) {
         }
       });
 
-      // Inserisce il payload JSON nel campo hidden
-      if (payloadField) {
-        payloadField.value = JSON.stringify(data);
-      }
-
-      // Imposta action e target del form
-      form.action = GOOGLE_SCRIPT_URL;
-      form.method = 'post';
-      form.target = 'hidden_iframe';
-
-      // Submit classico verso Apps Script
-      form.submit();
-
-      // Mostra successo dopo un piccolo ritardo
-      setTimeout(() => {
-        form.style.display = 'none';
-        if (successView) {
-          successView.classList.remove('hidden');
-        }
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 1500);
+      // Invio tramite fetch con no-cors per evitare errori CORS
+      // Il payload viene inviato come JSON nel body
+      fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'text/plain',
+        },
+        body: JSON.stringify(data),
+      })
+        .then(() => {
+          // Con no-cors non possiamo leggere la risposta, ma l'invio e' avvenuto
+          form.style.display = 'none';
+          if (successView) {
+            successView.classList.remove('hidden');
+          }
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        })
+        .catch((error) => {
+          console.error('Errore durante l\'invio:', error);
+          submitBtn.disabled = false;
+          submitBtn.innerText = 'Invia';
+          alert('Si \u00e8 verificato un errore durante l\'invio. Riprova.');
+        });
 
     } catch (error) {
       console.error('Errore durante la preparazione del submit:', error);
       submitBtn.disabled = false;
       submitBtn.innerText = 'Invia';
-      alert('Si è verificato un errore durante l’invio. Riprova.');
+      alert('Si \u00e8 verificato un errore durante l\'invio. Riprova.');
     }
   });
 }
-
-
-// ==========================================
-// TEST AUTO-COMPILAZIONE (facoltativo)
-// Rimuovi o commenta questa sezione in produzione
-// ==========================================
-
-/*
-(function autoTest() {
-  const rnd = Math.floor(Math.random() * 100000);
-
-  const set = (name, value) => {
-    const el = document.querySelector(`[name="${name}"]`);
-    if (el) el.value = value;
-  };
-
-  const check = (name) => {
-    const el = document.querySelector(`[name="${name}"]`);
-    if (el) el.checked = true;
-  };
-
-  set('nome', 'Tester_' + rnd);
-  set('cognome', 'Auto');
-  set('email', `test${rnd}@mail.com`);
-  set('telefono', '3331234567');
-  set('occupazione', 'Tester');
-
-  const radios = document.querySelectorAll('input[type="radio"]');
-  const radioGroups = {};
-  radios.forEach((radio) => {
-    if (!radioGroups[radio.name]) {
-      radioGroups[radio.name] = true;
-      radio.checked = true;
-    }
-  });
-
-  set('voto_sonno_overall', 6);
-  check('consenso_privacy');
-  check('disturbo_russa');
-  check('disturbo_apnea');
-
-  if (submitBtn) submitBtn.click();
-})();
-*/
