@@ -1,92 +1,159 @@
+// ==========================================
 // CONFIGURAZIONE
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwHLPw9-Qx1APysjedbPM6Dv-KdSR_a0c4droZ-8p5ZF_jLRM4F6_5pGDRp90Qsh0SajQ/exec';
+// ==========================================
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzw45wLWI5Owdpjl4bH6P-XMx1FDXUERvVGmp2jI928tDtxFVejPwh7EjE8HMWHYTg9OQ/exec';
 
+
+// ==========================================
+// HELPERS
+// ==========================================
+function toggleHidden(el, shouldHide) {
+  if (!el) return;
+  el.classList.toggle('hidden', shouldHide);
+}
+
+
+// ==========================================
 // GESTIONE CONDIZIONALI
+// ==========================================
 const chkInizio = document.getElementById('chk_inizio');
 const condInizio = document.getElementById('cond_inizio');
-if(chkInizio) {
-  chkInizio.addEventListener('change', function() {
-    condInizio.classList.toggle('hidden', !this.checked);
+
+if (chkInizio && condInizio) {
+  chkInizio.addEventListener('change', function () {
+    toggleHidden(condInizio, !this.checked);
   });
 }
 
 const chkRisvegli = document.getElementById('chk_risvegli');
 const condRisvegli = document.getElementById('cond_risvegli');
-if(chkRisvegli) {
-  chkRisvegli.addEventListener('change', function() {
-    condRisvegli.classList.toggle('hidden', !this.checked);
+
+if (chkRisvegli && condRisvegli) {
+  chkRisvegli.addEventListener('change', function () {
+    toggleHidden(condRisvegli, !this.checked);
   });
 }
 
 const selTurni = document.getElementById('lavoro_turni');
 const inpTurni = document.getElementById('lavoro_turni_spec');
-if(selTurni) {
-  selTurni.addEventListener('change', function() {
-    inpTurni.classList.toggle('hidden', this.value !== 'Si');
+
+if (selTurni && inpTurni) {
+  selTurni.addEventListener('change', function () {
+    toggleHidden(inpTurni, this.value !== 'Si');
   });
 }
 
-// INVIO FORM
-document.getElementById('questionarioForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  const btn = document.getElementById('submitBtn');
-  btn.disabled = true;
-  btn.innerText = "Invio in corso...";
 
-  const formData = new FormData(this);
-  const data = {};
-  
-  formData.forEach((val, key) => {
-    if(data[key]) {
-      if(!Array.isArray(data[key])) data[key] = [data[key]];
-      data[key].push(val);
-    } else {
-      data[key] = val;
+// ==========================================
+// INVIO FORM
+// ==========================================
+const form = document.getElementById('questionarioForm');
+const submitBtn = document.getElementById('submitBtn');
+const payloadField = document.getElementById('payload');
+const successView = document.getElementById('successView');
+
+if (form) {
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    if (!submitBtn) return;
+
+    submitBtn.disabled = true;
+    submitBtn.innerText = 'Invio in corso...';
+
+    try {
+      const formData = new FormData(form);
+      const data = {};
+
+      formData.forEach((val, key) => {
+        if (data[key] !== undefined) {
+          if (!Array.isArray(data[key])) {
+            data[key] = [data[key]];
+          }
+          data[key].push(val);
+        } else {
+          data[key] = val;
+        }
+      });
+
+      // Appiattisce gli array multipli in stringa
+      Object.keys(data).forEach((key) => {
+        if (Array.isArray(data[key])) {
+          data[key] = data[key].join(', ');
+        }
+      });
+
+      // Inserisce il payload JSON nel campo hidden
+      if (payloadField) {
+        payloadField.value = JSON.stringify(data);
+      }
+
+      // Imposta action e target del form
+      form.action = GOOGLE_SCRIPT_URL;
+      form.method = 'post';
+      form.target = 'hidden_iframe';
+
+      // Submit classico verso Apps Script
+      form.submit();
+
+      // Mostra successo dopo un piccolo ritardo
+      setTimeout(() => {
+        form.style.display = 'none';
+        if (successView) {
+          successView.classList.remove('hidden');
+        }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 1500);
+
+    } catch (error) {
+      console.error('Errore durante la preparazione del submit:', error);
+      submitBtn.disabled = false;
+      submitBtn.innerText = 'Invia';
+      alert('Si è verificato un errore durante l’invio. Riprova.');
     }
   });
+}
 
-  // Appiattisci array
-  Object.keys(data).forEach(k => {
-    if(Array.isArray(data[k])) data[k] = data[k].join(', ');
-  });
 
-  // Payload
-  document.getElementById('payload').value = JSON.stringify(data);
-  
-  this.action = GOOGLE_SCRIPT_URL;
-  this.target = 'hidden_iframe';
-  this.submit();
+// ==========================================
+// TEST AUTO-COMPILAZIONE (facoltativo)
+// Rimuovi o commenta questa sezione in produzione
+// ==========================================
 
-  setTimeout(() => {
-    document.getElementById('questionarioForm').style.display = 'none';
-    document.getElementById('successView').classList.remove('hidden');
-    window.scrollTo(0,0);
-  }, 1500);
-});
-  const check = (n) => { const el = document.querySelector(`[name="${n}"]`); if(el) el.checked=true; };
+/*
+(function autoTest() {
+  const rnd = Math.floor(Math.random() * 100000);
 
-  set('nome', 'Tester_'+rnd);
+  const set = (name, value) => {
+    const el = document.querySelector(`[name="${name}"]`);
+    if (el) el.value = value;
+  };
+
+  const check = (name) => {
+    const el = document.querySelector(`[name="${name}"]`);
+    if (el) el.checked = true;
+  };
+
+  set('nome', 'Tester_' + rnd);
   set('cognome', 'Auto');
   set('email', `test${rnd}@mail.com`);
   set('telefono', '3331234567');
   set('occupazione', 'Tester');
-  
-  // Seleziona primo radio di ogni gruppo
+
   const radios = document.querySelectorAll('input[type="radio"]');
   const radioGroups = {};
-  radios.forEach(r => {
-    if(!radioGroups[r.name]) {
-      radioGroups[r.name] = true;
-      r.checked = true;
+  radios.forEach((radio) => {
+    if (!radioGroups[radio.name]) {
+      radioGroups[radio.name] = true;
+      radio.checked = true;
     }
   });
-  
+
   set('voto_sonno_overall', 6);
   check('consenso_privacy');
-  
   check('disturbo_russa');
   check('disturbo_apnea');
-  
-  // Scatena evento submit
-  document.getElementById('submitBtn').click();
-};
+
+  if (submitBtn) submitBtn.click();
+})();
+*/
