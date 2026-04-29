@@ -1,7 +1,7 @@
 // ==========================================
 // CONFIGURAZIONE
 // ==========================================
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzw45wLWI5Owdpjl4bH6P-XMx1FDXUERvVGmp2jI928tDtxFVejPwh7EjE8HMWHYTg9OQ/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby0Fu-BFDH5CsrpXcb8ky3sRgzqcBRpsnl5thww17sHsqwX9Px2fkOQkBHVDI_P16TCIA/exec';
 
 
 // ==========================================
