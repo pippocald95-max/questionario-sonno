@@ -2,6 +2,26 @@
 // CONFIGURAZIONE
 // ==========================================
 const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz4WawSIJPfs47Tuyp2IoBEw8vpXn0ldZjsU09s3k6D2ggCNjqrQstJ0Atvt6xi7Vf5JQ/exec';
+const DIARY_URL = 'https://diario.cosimosgobba.it/';
+
+
+// ==========================================
+// CLIENT ID
+// Genera un codice univoco che collega questo questionario
+// alle compilazioni future del Diario del Sonno dello stesso cliente.
+// ==========================================
+function generateClientId() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // esclude caratteri ambigui (0/O, 1/I)
+  let code = '';
+  for (let i = 0; i < 6; i++) {
+    code += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return 'SN-' + code;
+}
+
+const clientIdInput = document.getElementById('client_id');
+const clientId = generateClientId();
+if (clientIdInput) clientIdInput.value = clientId;
 
 
 // ==========================================
@@ -96,6 +116,14 @@ if (form) {
           // Con no-cors non possiamo leggere la risposta, ma l'invio e' avvenuto
           form.style.display = 'none';
           if (successView) {
+            const idDisplay = document.getElementById('clientIdDisplay');
+            const diaryLink = document.getElementById('diaryLink');
+            const diaryUrl = DIARY_URL + '?cid=' + encodeURIComponent(clientId);
+            if (idDisplay) idDisplay.textContent = clientId;
+            if (diaryLink) {
+              diaryLink.href = diaryUrl;
+              diaryLink.textContent = diaryUrl;
+            }
             successView.classList.remove('hidden');
           }
           window.scrollTo({ top: 0, behavior: 'smooth' });
