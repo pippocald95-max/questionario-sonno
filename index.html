@@ -25,6 +25,7 @@
 
     <input type="hidden" name="payload" id="payload">
     <input type="hidden" name="type" value="questionario">
+    <input type="hidden" name="client_id" id="client_id">
 
     <!-- DATI PERSONALI -->
     <div class="section-title">I tuoi dati personali</div>
@@ -535,7 +536,12 @@
     <div class="success-icon">✅</div>
     <h2>Grazie mille!</h2>
     <p>Le tue risposte sono state registrate con successo. Ti contatteremo presto per offrirti il supporto più adatto a te.</p>
-    <button onclick="window.location.reload()" class="btn-submit" style="width:auto; padding:12px 35px;">Compila un altro questionario</button>
+    <div class="intro-box" style="margin-top:20px; text-align:left;">
+      <p><strong>Il tuo codice cliente:</strong> <span id="clientIdDisplay" style="font-weight:700; letter-spacing:1px;"></span></p>
+      <p>Usa questo link per compilare il tuo Diario del Sonno ogni giorno (il codice è già incluso, salvalo tra i preferiti):</p>
+      <p><a id="diaryLink" href="#" target="_blank" rel="noopener noreferrer" style="word-break:break-all;"></a></p>
+    </div>
+    <button onclick="window.location.reload()" class="btn-submit" style="width:auto; padding:12px 35px; margin-top:15px;">Compila un altro questionario</button>
   </div>
 </div>
 
