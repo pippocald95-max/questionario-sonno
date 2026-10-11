@@ -143,3 +143,11 @@ if (form) {
     }
   });
 }
+
+// [PATCH 2026-10-11] precompila l'email dal link della mail di conferma (?email=...),
+// così il questionario si collega in automatico alla prenotazione.
+(function () {
+  const email = new URLSearchParams(window.location.search).get('email');
+  const input = document.querySelector('input[name="email"]');
+  if (input && email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) input.value = email;
+})();
