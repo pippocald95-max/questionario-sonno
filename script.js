@@ -102,18 +102,27 @@ if (form) {
         }
       });
 
-      // Invio tramite fetch con no-cors per evitare errori CORS
-      // Il payload viene inviato come JSON nel body
+      // [PATCH 2026-11-14] niente piu' mode: 'no-cors': la pagina legge la risposta e
+      // mostra "Grazie" solo se il backend conferma il salvataggio. Con Content-Type
+      // text/plain la richiesta resta "semplice" (nessun preflight) e Apps Script
+      // risponde con Access-Control-Allow-Origin: *, quindi la risposta e' leggibile.
+      // Contratto col backend (doPost): JSON {"ok":true} se salvato, {"ok":false} se no.
+      // Il vecchio testo 'ok' e' accettato per compatibilita' finche' il backend non e'
+      // aggiornato. Se la risposta non arriva (rete, errore Google) NON si reinvia in
+      // automatico: l'invio potrebbe essere gia' nel foglio "grezzi" e si creerebbero
+      // doppioni; si chiede invece alla persona di scriverci.
       fetch(GOOGLE_SCRIPT_URL, {
         method: 'POST',
-        mode: 'no-cors',
         headers: {
           'Content-Type': 'text/plain',
         },
         body: JSON.stringify(data),
       })
-        .then(() => {
-          // Con no-cors non possiamo leggere la risposta, ma l'invio e' avvenuto
+        .then((res) => res.text())
+        .then((text) => {
+          let ok = false;
+          try { ok = JSON.parse(text).ok === true; } catch (_) { ok = text.trim() === 'ok'; }
+          if (!ok) throw new Error('rifiutato');
           form.style.display = 'none';
           if (successView) {
             const idDisplay = document.getElementById('clientIdDisplay');
@@ -132,7 +141,11 @@ if (form) {
           console.error('Errore durante l\'invio:', error);
           submitBtn.disabled = false;
           submitBtn.innerText = 'Invia';
-          alert('Si \u00e8 verificato un errore durante l\'invio. Riprova.');
+          if (error && error.message === 'rifiutato') {
+            alert('Non siamo riusciti a salvare il questionario. Controlla di aver compilato tutti i campi obbligatori e riprova. Se il problema continua scrivici a info@cosimosgobba.it.');
+          } else {
+            alert('Non abbiamo ricevuto conferma dell\'invio (problema di connessione). Per evitare doppioni non reinviare: scrivici a info@cosimosgobba.it e ti confermiamo se \u00e8 arrivato.');
+          }
         });
 
     } catch (error) {
