@@ -85,6 +85,9 @@ if (form) {
       const data = {};
 
       formData.forEach((val, key) => {
+        // [FIX 2026-11-17] il campo nascosto 'payload' (vuoto) non va inviato: il backend
+        // lo interpreta come JSON annidato e scarta l'invio ("Unexpected end of JSON input").
+        if (key === 'payload') return;
         if (data[key] !== undefined) {
           if (!Array.isArray(data[key])) {
             data[key] = [data[key]];
